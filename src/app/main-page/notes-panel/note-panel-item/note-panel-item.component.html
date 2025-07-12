@@ -1,0 +1,4 @@
+<div (click)="selected.emit(note())">
+  <h4 class="ps-3">{{ note().title }}</h4>
+  <div class="ps-3">{{ note().content | truncate }}</div>
+</div>

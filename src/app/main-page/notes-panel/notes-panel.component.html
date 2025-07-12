@@ -1,0 +1,5 @@
+@for (note of notes(); track note.id) {
+  <app-note-panel-item
+    [note]="note"
+    (selected)="noteSelected.emit(note)"></app-note-panel-item>
+}
