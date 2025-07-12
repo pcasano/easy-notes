@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { NotesPanelComponent } from './notes-panel/notes-panel.component';
 import { Note, NoteComponent } from './note/note.component';
 
@@ -9,7 +9,7 @@ import { Note, NoteComponent } from './note/note.component';
   styleUrl: './main-page.component.scss',
 })
 export class MainPageComponent {
-  notes: Note[] = [
+  notes: WritableSignal<Note[]> = signal([
     {
       id: 1,
       title: 'note 1',
@@ -35,11 +35,17 @@ export class MainPageComponent {
       title: 'note 5',
       content: 'asdasdsadsandalsdnaslkdalsdnaslkdasldasdsadasd8',
     },
-  ];
+  ]);
 
   selectedNote = signal<any | undefined>(undefined);
 
   onNoteChosen(note: any) {
     this.selectedNote.set(note);
+  }
+
+  onNoteUpdated(newNote: Note) {
+    this.notes.update((notes) =>
+      notes.map((note) => (note.id === newNote.id ? newNote : note))
+    );
   }
 }

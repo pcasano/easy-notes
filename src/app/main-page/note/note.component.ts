@@ -1,5 +1,6 @@
-import { Component, effect, input } from '@angular/core';
+import { Component, effect, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
 
 export type Note = {
   id: number;
@@ -13,8 +14,26 @@ export type Note = {
   templateUrl: './note.component.html',
   styleUrl: './note.component.scss',
 })
-export class NoteComponent {
+export class NoteComponent implements OnInit {
+  private destroy$ = new Subject<void>();
+
+  ngOnInit(): void {
+    this.noteForm.valueChanges
+      .pipe(debounceTime(2000), takeUntil(this.destroy$))
+      .subscribe((value) => {
+        const note = this.selectedNote();
+        if (!note) return;
+
+        this.updatedNote.emit({
+          id: note.id,
+          ...value,
+        } as Note);
+      });
+  }
+
   readonly selectedNote = input<Note | undefined>();
+
+  updatedNote = output<Note>();
 
   noteForm = new FormGroup({
     title: new FormControl(''),
