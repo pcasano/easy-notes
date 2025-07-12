@@ -21,6 +21,12 @@
         placeholder="Enter note content"
       ></textarea>
     </div>
+    <div>Created: {{ selectedNote()?.createdAt }}</div>
+    @if (selectedNote()?.editedAt) {
+      <div>
+        Edited: {{ selectedNote()?.editedAt | date: 'dd.MM.yyyy HH:mm' }}
+      </div>
+    }
   </form>
 } @else {
   <div></div>
