@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-3"><app-notes-panel
-    [notes]="notes"
-    (noteSelected)="onNoteChosen($event)"></app-notes-panel></div>
+  <div class="col-3">
+    <app-notes-panel
+      [notes]="notes"
+      (noteSelected)="onNoteChosen($event)"
+    ></app-notes-panel>
+  </div>
   <div class="col-9"><app-note [selectedNote]="selectedNote()"></app-note></div>
-
-
 </div>
-
