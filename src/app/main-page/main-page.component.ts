@@ -76,5 +76,10 @@ export class MainPageComponent {
     this.notes.update((notes) =>
       notes.filter((note) => note.id !== noteToDelete.id)
     );
+    if (this.notes().length > 0) {
+      this.selectedNote.set(this.notes().at(0));
+    } else {
+      this.selectedNote.set(null);
+    }
   }
 }
