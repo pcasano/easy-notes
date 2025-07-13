@@ -1,4 +1,12 @@
-<div (click)="selected.emit(note())">
+<div class="note-item position-relative" (click)="selected.emit(note())">
   <h4 class="ps-3">{{ note().title }}</h4>
   <div class="ps-3">{{ note().content | truncate }}</div>
+
+  <button
+    class="btn btn-sm btn-danger position-absolute trash-btn"
+    (click)="deleted.emit(note()); $event.stopPropagation()"
+    title="Delete note"
+  >
+    <i class="bi bi-trash"></i>
+  </button>
 </div>

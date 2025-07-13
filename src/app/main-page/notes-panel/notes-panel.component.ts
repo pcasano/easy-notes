@@ -13,6 +13,8 @@ export class NotesPanelComponent {
 
   noteSelected = output<Note>();
 
+  noteDeleted = output<Note>();
+
   readonly addNote = output<void>();
 
   show() {

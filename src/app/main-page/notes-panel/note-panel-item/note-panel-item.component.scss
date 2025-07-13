@@ -1,0 +1,16 @@
+.note-item {
+  padding-right: 40px; /* space for the trash button */
+  cursor: pointer;
+}
+
+.trash-btn {
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: none;
+  z-index: 10;
+}
+
+.note-item:hover .trash-btn {
+  display: inline-block;
+}

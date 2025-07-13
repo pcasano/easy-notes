@@ -7,5 +7,6 @@
   <app-note-panel-item
     [note]="note"
     (selected)="noteSelected.emit(note)"
+    (deleted)="noteDeleted.emit(note)"
   ></app-note-panel-item>
 }

@@ -13,5 +13,5 @@ export class NotePanelItemComponent {
 
   selected = output<Note>();
 
-  onSelect() {}
+  deleted = output<Note>();
 }

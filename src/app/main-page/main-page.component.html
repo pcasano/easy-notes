@@ -3,6 +3,7 @@
     <app-notes-panel
       [notes]="notes()"
       (noteSelected)="onNoteChosen($event)"
+      (noteDeleted)="onNoteDeleted($event)"
       (addNote)="onNewNote()"
     ></app-notes-panel>
   </div>
