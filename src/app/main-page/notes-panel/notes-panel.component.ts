@@ -12,4 +12,6 @@ export class NotesPanelComponent {
   readonly notes = input.required<Note[]>();
 
   noteSelected = output<any>();
+
+  readonly addNote = output<void>();
 }

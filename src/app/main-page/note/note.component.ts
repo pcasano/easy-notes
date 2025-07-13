@@ -4,10 +4,10 @@ import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
 export type Note = {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
+  id: string;
+  title?: string;
+  content?: string;
+  createdAt: Date;
   editedAt?: Date;
 };
 
