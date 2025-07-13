@@ -29,6 +29,8 @@ export class NoteComponent implements OnInit {
     content: new FormControl(''),
   });
 
+  isDraft = false;
+
   ngOnInit(): void {
     this.noteForm.valueChanges
       .pipe(debounceTime(2000), takeUntil(this.destroy$))
@@ -39,7 +41,7 @@ export class NoteComponent implements OnInit {
         this.updatedNote.emit({
           id: note.id,
           createdAt: note.createdAt,
-          editedAt: new Date(),
+          editedAt: this.isDraft ? undefined : new Date(),
           ...value,
         } as Note);
       });
@@ -48,6 +50,7 @@ export class NoteComponent implements OnInit {
   readonly selectedNoteEffect = effect(() => {
     const note = this.selectedNote();
     if (note) {
+      this.isDraft = !note.content;
       this.noteForm.patchValue(
         {
           title: note.title,

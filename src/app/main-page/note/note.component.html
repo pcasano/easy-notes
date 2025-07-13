@@ -26,7 +26,8 @@
     </div>
     @if (selectedNote()?.editedAt) {
       <div>
-        Edited: {{ selectedNote()?.editedAt | date: 'dd.MM.yyyy HH:mm' }}
+        Edited:
+        {{ selectedNote()?.editedAt | date: 'dd.MM.yyyy HH:mm' }}
       </div>
     }
   </form>
