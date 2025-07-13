@@ -24,6 +24,8 @@ export class NoteComponent implements OnInit {
 
   updatedNote = output<Note>();
 
+  deletedNote = output<Note>();
+
   noteForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl(''),
@@ -62,4 +64,10 @@ export class NoteComponent implements OnInit {
       this.noteForm.reset();
     }
   });
+
+  onDelete() {
+    const note = this.selectedNote();
+    if (!note) return;
+    this.deletedNote.emit(note);
+  }
 }

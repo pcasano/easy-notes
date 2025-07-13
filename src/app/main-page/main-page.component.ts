@@ -70,4 +70,11 @@ export class MainPageComponent {
     this.selectedNote.set(newNote);
     this.notes.update((notes) => [...notes, newNote]);
   }
+
+  onNoteDeleted(noteToDelete: Note) {
+    console.log(noteToDelete);
+    this.notes.update((notes) =>
+      notes.filter((note) => note.id !== noteToDelete.id)
+    );
+  }
 }

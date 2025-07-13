@@ -11,7 +11,11 @@ import { Note } from '../note/note.component';
 export class NotesPanelComponent {
   readonly notes = input.required<Note[]>();
 
-  noteSelected = output<any>();
+  noteSelected = output<Note>();
 
   readonly addNote = output<void>();
+
+  show() {
+    console.log(this.notes());
+  }
 }
