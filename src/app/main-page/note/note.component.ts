@@ -1,4 +1,4 @@
-import { Component, effect, input, output } from '@angular/core';
+import { Component, effect, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -17,23 +17,8 @@ export type Note = {
   templateUrl: './note.component.html',
   styleUrl: './note.component.scss',
 })
-export class NoteComponent {
+export class NoteComponent implements OnInit {
   private destroy$ = new Subject<void>();
-
-  /*  ngOnInit(): void {
-    this.noteForm.valueChanges
-      .pipe(debounceTime(2000), takeUntil(this.destroy$))
-      .subscribe((value) => {
-        const note = this.selectedNote();
-        if (!note) return;
-
-        this.updatedNote.emit({
-          id: note.id,
-          editedAt: new Date(),
-          ...value,
-        } as Note);
-      });
-  }*/
 
   readonly selectedNote = input<Note | undefined>();
 
@@ -44,28 +29,32 @@ export class NoteComponent {
     content: new FormControl(''),
   });
 
+  ngOnInit(): void {
+    this.noteForm.valueChanges
+      .pipe(debounceTime(2000), takeUntil(this.destroy$))
+      .subscribe((value) => {
+        const note = this.selectedNote();
+        if (!note) return;
+
+        this.updatedNote.emit({
+          id: note.id,
+          createdAt: note.createdAt,
+          editedAt: new Date(),
+          ...value,
+        } as Note);
+      });
+  }
+
   readonly selectedNoteEffect = effect(() => {
     const note = this.selectedNote();
     if (note) {
-      this.noteForm.patchValue({
-        title: note.title,
-        content: note.content,
-      });
-
-      this.noteForm.valueChanges
-        .pipe(debounceTime(2000), takeUntil(this.destroy$))
-        .subscribe((value) => {
-          const note = this.selectedNote();
-          if (!note) return;
-
-          this.updatedNote.emit({
-            id: note.id,
-            createdAt: note.createdAt,
-            editedAt: new Date(),
-            ...value,
-          } as Note);
-          console.log(note.editedAt);
-        });
+      this.noteForm.patchValue(
+        {
+          title: note.title,
+          content: note.content,
+        },
+        { emitEvent: false }
+      );
     } else {
       this.noteForm.reset();
     }

@@ -52,5 +52,6 @@ export class MainPageComponent {
     this.notes.update((notes) =>
       notes.map((note) => (note.id === newNote.id ? newNote : note))
     );
+    this.selectedNote.set(newNote);
   }
 }
