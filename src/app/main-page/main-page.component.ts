@@ -72,7 +72,6 @@ export class MainPageComponent {
   }
 
   onNoteDeleted(noteToDelete: Note) {
-    console.log(noteToDelete);
     this.notes.update((notes) =>
       notes.filter((note) => note.id !== noteToDelete.id)
     );
