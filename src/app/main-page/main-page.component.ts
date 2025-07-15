@@ -48,7 +48,7 @@ export class MainPageComponent {
     },
   ]);
 
-  selectedNote = signal<any | undefined>(undefined);
+  selectedNote = signal<Note | undefined>(this.notes().at(0));
 
   filterText = signal('');
 
@@ -80,7 +80,7 @@ export class MainPageComponent {
     if (this.notes().length > 0) {
       this.selectedNote.set(this.notes().at(0));
     } else {
-      this.selectedNote.set(null);
+      this.selectedNote.set(undefined);
     }
   }
 
