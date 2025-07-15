@@ -1,10 +1,11 @@
 <div class="row">
   <div class="col-3">
     <app-notes-panel
-      [notes]="notes()"
+      [notes]="filteredNotes()"
       (noteSelected)="onNoteChosen($event)"
       (noteDeleted)="onNoteDeleted($event)"
       (addNote)="onNewNote()"
+      (filterNote)="onNoteFiltered($event)"
     ></app-notes-panel>
   </div>
   <div class="col-9">

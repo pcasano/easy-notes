@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, computed, signal, WritableSignal } from '@angular/core';
 import { NotesPanelComponent } from './notes-panel/notes-panel.component';
 import { Note, NoteComponent } from './note/note.component';
 import { v4 as uuid } from 'uuid';
@@ -50,6 +50,8 @@ export class MainPageComponent {
 
   selectedNote = signal<any | undefined>(undefined);
 
+  filterText = signal('');
+
   onNoteChosen(note: Note) {
     this.selectedNote.set(note);
   }
@@ -80,5 +82,20 @@ export class MainPageComponent {
     } else {
       this.selectedNote.set(null);
     }
+  }
+
+  filteredNotes = computed(() => {
+    const query = this.filterText().trim().toLowerCase();
+    return !query
+      ? this.notes()
+      : this.notes().filter(
+          (note) =>
+            note.title?.toLowerCase().includes(query) ||
+            note.content?.toLowerCase().includes(query)
+        );
+  });
+
+  onNoteFiltered(value: string) {
+    this.filterText.set(value);
   }
 }

@@ -2,7 +2,14 @@
   New
 </button>
 
-<button type="button" class="btn btn-primary" (click)="show()">New</button>
+<div>
+  <input
+    type="text"
+    id="filter"
+    placeholder="Filter"
+    (input)="onInput($event)"
+  />
+</div>
 @for (note of notes(); track note.id) {
   <app-note-panel-item
     [note]="note"
