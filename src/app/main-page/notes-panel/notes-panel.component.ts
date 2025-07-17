@@ -31,4 +31,6 @@ export class NotesPanelComponent {
     const inputElement = event.target as HTMLInputElement;
     this.filterNote.emit(inputElement.value);
   }
+
+  protected readonly Tab = Tab;
 }

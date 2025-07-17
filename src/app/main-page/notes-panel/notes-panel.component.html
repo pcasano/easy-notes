@@ -1,6 +1,8 @@
-<button type="button" class="btn btn-primary" (click)="addNote.emit()">
-  New
-</button>
+@if (tab() === Tab.Notes) {
+  <button type="button" class="btn btn-primary" (click)="addNote.emit()">
+    New
+  </button>
+}
 
 <div>
   <input

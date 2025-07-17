@@ -43,7 +43,7 @@ export class NoteComponent implements OnInit {
       .pipe(debounceTime(2000), takeUntil(this.destroy$))
       .subscribe((value) => {
         const note = this.selectedNote();
-        if (!note) return;
+        if (!note || this.tab() !== Tab.Notes) return;
 
         this.updatedNote.emit({
           id: note.id,
@@ -68,6 +68,14 @@ export class NoteComponent implements OnInit {
       );
     } else {
       this.noteForm.reset();
+    }
+  });
+
+  readonly selectedTabEffect = effect(() => {
+    if (this.tab() == Tab.Notes) {
+      this.noteForm.enable();
+    } else {
+      this.noteForm.disable();
     }
   });
 
