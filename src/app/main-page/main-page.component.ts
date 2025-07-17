@@ -93,8 +93,9 @@ export class MainPageComponent {
           : note
       )
     );
-    if (this.notes().length > 0) {
-      this.selectedNote.set(this.notes().at(0));
+    const filteredNotes = this.notes().filter((n) => n.tab === Tab.Notes);
+    if (filteredNotes.length > 0) {
+      this.selectedNote.set(filteredNotes.at(0));
     } else {
       this.selectedNote.set(undefined);
     }
@@ -122,5 +123,21 @@ export class MainPageComponent {
         .filter((n) => n.tab === tab)
         .at(0)
     );
+  }
+
+  onNoteRestored(restoredNote: Note) {
+    this.notes.update((notes) =>
+      notes.map((note) =>
+        note.id === restoredNote.id
+          ? { ...note, tab: Tab.Notes, deletedAt: undefined }
+          : note
+      )
+    );
+    const filteredNotes = this.notes().filter((n) => n.tab === Tab.Trash);
+    if (filteredNotes.length > 0) {
+      this.selectedNote.set(filteredNotes.at(0));
+    } else {
+      this.selectedNote.set(undefined);
+    }
   }
 }

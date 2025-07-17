@@ -17,5 +17,6 @@
     [note]="note"
     (selected)="noteSelected.emit(note)"
     (deleted)="noteDeleted.emit(note)"
+    [tab]="tab()"
   ></app-note-panel-item>
 }

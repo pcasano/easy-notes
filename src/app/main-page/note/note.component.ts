@@ -31,6 +31,8 @@ export class NoteComponent implements OnInit {
 
   deletedNote = output<Note>();
 
+  restoreNote = output<Note>();
+
   noteForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl(''),
@@ -86,4 +88,10 @@ export class NoteComponent implements OnInit {
   }
 
   protected readonly Tab = Tab;
+
+  onRestore() {
+    const note = this.selectedNote();
+    if (!note) return;
+    this.restoreNote.emit(note);
+  }
 }

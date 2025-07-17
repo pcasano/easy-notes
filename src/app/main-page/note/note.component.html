@@ -39,10 +39,23 @@
           </div>
         }
       </div>
-      <button type="button" class="btn btn-danger" (click)="onDelete()">
-        Delete
-        <i class="bi bi-trash3"></i>
-      </button>
+      <div>
+        @if (tab() === Tab.Trash) {
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            (click)="onRestore()"
+          >
+            Restore
+          </button>
+        }
+        @if (tab() === Tab.Notes) {
+          <button type="button" class="btn btn-danger" (click)="onDelete()">
+            Delete
+            <i class="bi bi-trash3"></i>
+          </button>
+        }
+      </div>
     </div>
   </form>
 } @else {
