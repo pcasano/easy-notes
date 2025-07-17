@@ -10,7 +10,7 @@
     (input)="onInput($event)"
   />
 </div>
-@for (note of notes(); track note.id) {
+@for (note of notesFilteredByTab(); track note.id) {
   <app-note-panel-item
     [note]="note"
     (selected)="noteSelected.emit(note)"

@@ -2,6 +2,7 @@ import { Component, effect, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { Tab } from '../navigation-bar/navigation-bar.component';
 
 export type Note = {
   id: string;
@@ -9,6 +10,8 @@ export type Note = {
   content?: string;
   createdAt: Date;
   editedAt?: Date;
+  deletedAt?: Date;
+  tab: Tab;
 };
 
 @Component({
@@ -21,6 +24,8 @@ export class NoteComponent implements OnInit {
   private destroy$ = new Subject<void>();
 
   readonly selectedNote = input<Note | undefined>();
+
+  readonly tab = input.required<Tab>();
 
   updatedNote = output<Note>();
 
@@ -44,6 +49,7 @@ export class NoteComponent implements OnInit {
           id: note.id,
           createdAt: note.createdAt,
           editedAt: this.isDraft ? undefined : new Date(),
+          tab: Tab.Notes,
           ...value,
         } as Note);
       });
@@ -70,4 +76,6 @@ export class NoteComponent implements OnInit {
     if (!note) return;
     this.deletedNote.emit(note);
   }
+
+  protected readonly Tab = Tab;
 }

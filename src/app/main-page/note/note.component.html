@@ -32,6 +32,12 @@
             {{ selectedNote()?.editedAt | date: 'dd.MM.yyyy HH:mm' }}
           </div>
         }
+        @if (tab() === Tab.Trash && selectedNote()?.deletedAt) {
+          <div>
+            Deleted:
+            {{ selectedNote()?.deletedAt | date: 'dd.MM.yyyy HH:mm' }}
+          </div>
+        }
       </div>
       <button type="button" class="btn btn-danger" (click)="onDelete()">
         Delete

@@ -21,6 +21,7 @@ export class MainPageComponent {
       content: 'asdasdsadsandalsdnaslkdalsdnaslkdasldasdsadasd8',
       createdAt: new Date(2015, 0, 11, 19, 25),
       isNew: false,
+      tab: Tab.Notes,
     },
     {
       id: '2',
@@ -28,6 +29,7 @@ export class MainPageComponent {
       content: 'asdasdsadsandalsdnaslkdalsdnaslkdasldasdsadasd8',
       createdAt: new Date(2017, 8, 7, 9, 45),
       isNew: false,
+      tab: Tab.Notes,
     },
     {
       id: '3',
@@ -35,6 +37,7 @@ export class MainPageComponent {
       content: 'asdasdsadsandalsdnaslkdalsdnaslkdasldasdsadasd8',
       createdAt: new Date(2014, 2, 15, 21, 30),
       isNew: false,
+      tab: Tab.Notes,
     },
     {
       id: '4',
@@ -42,6 +45,7 @@ export class MainPageComponent {
       content: 'asdasdsadsandalsdnaslkdalsdnaslkdasldasdsadasd8',
       createdAt: new Date(2019, 10, 3, 17, 5),
       isNew: false,
+      tab: Tab.Notes,
     },
     {
       id: '5',
@@ -49,6 +53,7 @@ export class MainPageComponent {
       content: 'asdasdsadsandalsdnaslkdalsdnaslkdasldasdsadasd8',
       createdAt: new Date(2016, 0, 28, 11, 50),
       isNew: false,
+      tab: Tab.Trash,
     },
   ]);
 
@@ -74,6 +79,7 @@ export class MainPageComponent {
       id: uuid(),
       title: 'Untitled note',
       createdAt: new Date(),
+      tab: Tab.Notes,
     };
     this.selectedNote.set(newNote);
     this.notes.update((notes) => [...notes, newNote]);
@@ -81,7 +87,11 @@ export class MainPageComponent {
 
   onNoteDeleted(noteToDelete: Note) {
     this.notes.update((notes) =>
-      notes.filter((note) => note.id !== noteToDelete.id)
+      notes.map((note) =>
+        note.id === noteToDelete.id
+          ? { ...note, tab: Tab.Trash, deletedAt: new Date() }
+          : note
+      )
     );
     if (this.notes().length > 0) {
       this.selectedNote.set(this.notes().at(0));
@@ -107,5 +117,10 @@ export class MainPageComponent {
 
   onTabSelected(tab: Tab) {
     this.selectedTab.set(tab);
+    this.selectedNote.set(
+      this.notes()
+        .filter((n) => n.tab === tab)
+        .at(0)
+    );
   }
 }

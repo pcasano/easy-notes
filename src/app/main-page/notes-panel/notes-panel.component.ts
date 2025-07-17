@@ -1,7 +1,8 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { NotePanelItemComponent } from './note-panel-item/note-panel-item.component';
 import { Note } from '../note/note.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Tab } from '../navigation-bar/navigation-bar.component';
 
 @Component({
   selector: 'app-notes-panel',
@@ -11,6 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class NotesPanelComponent {
   readonly notes = input.required<Note[]>();
+
+  notesFilteredByTab = computed(() => {
+    return this.notes().filter((note) => note.tab === this.tab());
+  });
+
+  readonly tab = input.required<Tab>();
 
   noteSelected = output<Note>();
 
