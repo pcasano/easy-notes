@@ -2,10 +2,14 @@ import { Component, computed, signal, WritableSignal } from '@angular/core';
 import { NotesPanelComponent } from './notes-panel/notes-panel.component';
 import { Note, NoteComponent } from './note/note.component';
 import { v4 as uuid } from 'uuid';
+import {
+  NavigationBarComponent,
+  Tab,
+} from './navigation-bar/navigation-bar.component';
 
 @Component({
   selector: 'app-main-page',
-  imports: [NotesPanelComponent, NoteComponent],
+  imports: [NotesPanelComponent, NoteComponent, NavigationBarComponent],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
 })
@@ -52,6 +56,8 @@ export class MainPageComponent {
 
   filterText = signal('');
 
+  selectedTab = signal<Tab>(Tab.Notes);
+
   onNoteChosen(note: Note) {
     this.selectedNote.set(note);
   }
@@ -97,5 +103,9 @@ export class MainPageComponent {
 
   onNoteFiltered(value: string) {
     this.filterText.set(value);
+  }
+
+  onTabSelected(tab: Tab) {
+    this.selectedTab.set(tab);
   }
 }
