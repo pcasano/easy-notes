@@ -93,12 +93,7 @@ export class MainPageComponent {
           : note
       )
     );
-    const filteredNotes = this.notes().filter((n) => n.tab === Tab.Notes);
-    if (filteredNotes.length > 0) {
-      this.selectedNote.set(filteredNotes.at(0));
-    } else {
-      this.selectedNote.set(undefined);
-    }
+    this.selectNoteGivenTab(Tab.Notes);
   }
 
   filteredNotes = computed(() => {
@@ -133,24 +128,22 @@ export class MainPageComponent {
           : note
       )
     );
-    const filteredNotes = this.notes().filter((n) => n.tab === Tab.Trash);
-    if (filteredNotes.length > 0) {
-      this.selectedNote.set(filteredNotes.at(0));
-    } else {
-      this.selectedNote.set(undefined);
-    }
+    this.selectNoteGivenTab(Tab.Trash);
   }
 
   onNoteDeleted(noteToDelete: Note) {
     this.notes.update((notes) =>
       notes.filter((note) => note.id !== noteToDelete.id)
     );
-    const filteredNotes = this.notes().filter((n) => n.tab === Tab.Notes);
+    this.selectNoteGivenTab(Tab.Trash);
+  }
+
+  selectNoteGivenTab(tab: Tab) {
+    const filteredNotes = this.notes().filter((n) => n.tab === tab);
     if (filteredNotes.length > 0) {
       this.selectedNote.set(filteredNotes.at(0));
     } else {
       this.selectedNote.set(undefined);
     }
-    console.log(this.notes());
   }
 }
