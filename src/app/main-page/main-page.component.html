@@ -4,7 +4,7 @@
     <app-notes-panel
       [notes]="filteredNotes()"
       (noteSelected)="onNoteChosen($event)"
-      (noteDeleted)="onNoteDeleted($event)"
+      (noteDeleted)="onNoteMovedToTrash($event)"
       (addNote)="onNewNote()"
       (filterNote)="onNoteFiltered($event)"
       [tab]="selectedTab()"
@@ -14,8 +14,9 @@
     <app-note
       [selectedNote]="selectedNote()"
       (updatedNote)="onNoteUpdated($event)"
-      (deletedNote)="onNoteDeleted($event)"
+      (movedToTrashNote)="onNoteMovedToTrash($event)"
       (restoreNote)="onNoteRestored($event)"
+      (deletedNote)="onNoteDeleted($event)"
       [tab]="selectedTab()"
     ></app-note>
   </div>

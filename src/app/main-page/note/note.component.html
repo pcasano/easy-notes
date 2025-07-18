@@ -32,10 +32,10 @@
             {{ selectedNote()?.editedAt | date: 'dd.MM.yyyy HH:mm' }}
           </div>
         }
-        @if (tab() === Tab.Trash && selectedNote()?.deletedAt) {
+        @if (tab() === Tab.Trash && selectedNote()?.movedToTrashAt) {
           <div>
             Deleted:
-            {{ selectedNote()?.deletedAt | date: 'dd.MM.yyyy HH:mm' }}
+            {{ selectedNote()?.movedToTrashAt | date: 'dd.MM.yyyy HH:mm' }}
           </div>
         }
       </div>
@@ -49,12 +49,14 @@
             Restore
           </button>
         }
-        @if (tab() === Tab.Notes) {
-          <button type="button" class="btn btn-danger" (click)="onDelete()">
-            Delete
-            <i class="bi bi-trash3"></i>
-          </button>
-        }
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="tab() === Tab.Notes ? onMoveToTrash() : onDelete()"
+        >
+          {{ tab() === Tab.Notes ? 'Delete' : 'Delete from Trash' }}
+          <i class="bi bi-trash3"></i>
+        </button>
       </div>
     </div>
   </form>

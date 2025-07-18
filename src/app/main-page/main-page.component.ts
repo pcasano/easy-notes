@@ -85,11 +85,11 @@ export class MainPageComponent {
     this.notes.update((notes) => [...notes, newNote]);
   }
 
-  onNoteDeleted(noteToDelete: Note) {
+  onNoteMovedToTrash(noteToMoveToTrash: Note) {
     this.notes.update((notes) =>
       notes.map((note) =>
-        note.id === noteToDelete.id
-          ? { ...note, tab: Tab.Trash, deletedAt: new Date() }
+        note.id === noteToMoveToTrash.id
+          ? { ...note, tab: Tab.Trash, movedToTrashAt: new Date() }
           : note
       )
     );
@@ -129,7 +129,7 @@ export class MainPageComponent {
     this.notes.update((notes) =>
       notes.map((note) =>
         note.id === restoredNote.id
-          ? { ...note, tab: Tab.Notes, deletedAt: undefined }
+          ? { ...note, tab: Tab.Notes, movedToTrashAt: undefined }
           : note
       )
     );
@@ -139,5 +139,18 @@ export class MainPageComponent {
     } else {
       this.selectedNote.set(undefined);
     }
+  }
+
+  onNoteDeleted(noteToDelete: Note) {
+    this.notes.update((notes) =>
+      notes.filter((note) => note.id !== noteToDelete.id)
+    );
+    const filteredNotes = this.notes().filter((n) => n.tab === Tab.Notes);
+    if (filteredNotes.length > 0) {
+      this.selectedNote.set(filteredNotes.at(0));
+    } else {
+      this.selectedNote.set(undefined);
+    }
+    console.log(this.notes());
   }
 }

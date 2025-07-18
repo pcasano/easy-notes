@@ -10,7 +10,7 @@ export type Note = {
   content?: string;
   createdAt: Date;
   editedAt?: Date;
-  deletedAt?: Date;
+  movedToTrashAt?: Date;
   tab: Tab;
 };
 
@@ -29,6 +29,8 @@ export class NoteComponent implements OnInit {
 
   updatedNote = output<Note>();
 
+  movedToTrashNote = output<Note>();
+
   deletedNote = output<Note>();
 
   restoreNote = output<Note>();
@@ -39,6 +41,8 @@ export class NoteComponent implements OnInit {
   });
 
   isDraft = false;
+
+  protected readonly Tab = Tab;
 
   ngOnInit(): void {
     this.noteForm.valueChanges
@@ -81,13 +85,17 @@ export class NoteComponent implements OnInit {
     }
   });
 
+  onMoveToTrash() {
+    const note = this.selectedNote();
+    if (!note) return;
+    this.movedToTrashNote.emit(note);
+  }
+
   onDelete() {
     const note = this.selectedNote();
     if (!note) return;
     this.deletedNote.emit(note);
   }
-
-  protected readonly Tab = Tab;
 
   onRestore() {
     const note = this.selectedNote();
