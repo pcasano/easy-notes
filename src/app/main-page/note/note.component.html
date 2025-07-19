@@ -23,16 +23,22 @@
     </div>
     <div class="d-flex justify-content-between align-items-start">
       <div class="d-flex flex-column">
-        <div>
-          Created: {{ selectedNote()?.createdAt | date: 'dd.MM.yyyy HH:mm' }}
-        </div>
-        @if (selectedNote()?.editedAt) {
+        @if (settings.showCreationDate) {
+          <div>
+            Created: {{ selectedNote()?.createdAt | date: 'dd.MM.yyyy HH:mm' }}
+          </div>
+        }
+        @if (selectedNote()?.editedAt && settings.showEditDate) {
           <div>
             Edited:
             {{ selectedNote()?.editedAt | date: 'dd.MM.yyyy HH:mm' }}
           </div>
         }
-        @if (tab() === Tab.Trash && selectedNote()?.movedToTrashAt) {
+        @if (
+          tab() === Tab.Trash &&
+          selectedNote()?.movedToTrashAt &&
+          settings.showMovedToTrashDate
+        ) {
           <div>
             Deleted:
             {{ selectedNote()?.movedToTrashAt | date: 'dd.MM.yyyy HH:mm' }}

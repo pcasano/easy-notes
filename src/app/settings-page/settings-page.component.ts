@@ -18,16 +18,18 @@ export class SettingsPageComponent implements OnInit {
   detectLinks = true;
   showCreationDate = true;
   showEditDate = true;
-  showDeleteDate = true;
+  showMovedToTrashDate = true;
   activeArchive = true;
 
   ngOnInit() {
-    this.sortAlphabetically = this.settingsStore.sortAlphabetically();
-    this.detectLinks = this.settingsStore.detectLinks();
-    this.showCreationDate = this.settingsStore.showCreationDate();
-    this.showEditDate = this.settingsStore.showEditDate();
-    this.showDeleteDate = this.settingsStore.showDeleteDate();
-    this.activeArchive = this.settingsStore.activeArchive();
+    const settings = this.settingsStore.settings;
+
+    this.sortAlphabetically = settings.sortAlphabetically();
+    this.detectLinks = settings.detectLinks();
+    this.showCreationDate = settings.showCreationDate();
+    this.showEditDate = settings.showEditDate();
+    this.showMovedToTrashDate = settings.showMovedToTrashDate();
+    this.activeArchive = settings.activeArchive();
   }
 
   onBack() {
@@ -36,7 +38,7 @@ export class SettingsPageComponent implements OnInit {
       detectLinks: this.detectLinks,
       showCreationDate: this.showCreationDate,
       showEditDate: this.showEditDate,
-      showDeleteDate: this.showDeleteDate,
+      showMovedToTrashDate: this.showMovedToTrashDate,
       activeArchive: this.activeArchive,
     };
 

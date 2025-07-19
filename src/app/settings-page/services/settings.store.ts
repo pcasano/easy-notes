@@ -1,29 +1,38 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 
 type SettingsState = {
-  sortAlphabetically: boolean;
-  detectLinks: boolean;
-  showCreationDate: boolean;
-  showEditDate: boolean;
-  showDeleteDate: boolean;
-  activeArchive: boolean;
+  settings: {
+    sortAlphabetically: boolean;
+    detectLinks: boolean;
+    showCreationDate: boolean;
+    showEditDate: boolean;
+    showMovedToTrashDate: boolean;
+    activeArchive: boolean;
+  };
 };
 
 const initialSettingsState: SettingsState = {
-  sortAlphabetically: true,
-  detectLinks: false,
-  showCreationDate: true,
-  showEditDate: true,
-  showDeleteDate: false,
-  activeArchive: true,
+  settings: {
+    sortAlphabetically: true,
+    detectLinks: false,
+    showCreationDate: true,
+    showEditDate: true,
+    showMovedToTrashDate: false,
+    activeArchive: true,
+  },
 };
 
 export const SettingsStore = signalStore(
   { providedIn: 'root' },
   withState(initialSettingsState),
   withMethods((store) => ({
-    saveSettings: (settings: SettingsState) => {
-      patchState(store, () => ({ ...settings }));
+    saveSettings: (updatedSettings: SettingsState['settings']) => {
+      patchState(store, (state) => ({
+        settings: {
+          ...state.settings,
+          ...updatedSettings,
+        },
+      }));
     },
   }))
 );

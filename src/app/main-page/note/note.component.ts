@@ -1,8 +1,16 @@
-import { Component, effect, input, OnInit, output } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  OnInit,
+  output,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Tab } from '../navigation-bar/navigation-bar.component';
+import { SettingsStore } from '../../settings-page/services/settings.store';
 
 export type Note = {
   id: string;
@@ -21,11 +29,15 @@ export type Note = {
   styleUrl: './note.component.scss',
 })
 export class NoteComponent implements OnInit {
+  private settingsStore = inject(SettingsStore);
+
   private destroy$ = new Subject<void>();
 
   readonly selectedNote = input<Note | undefined>();
 
   readonly tab = input.required<Tab>();
+
+  settings = this.settingsStore.settings();
 
   updatedNote = output<Note>();
 
