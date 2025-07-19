@@ -5,5 +5,4 @@ import { SettingsPageComponent } from './settings-page/settings-page.component';
 export const routes: Routes = [
   { path: '', component: MainPageComponent },
   { path: 'settings', component: SettingsPageComponent },
-  { path: '**', redirectTo: 'main' },
 ];
