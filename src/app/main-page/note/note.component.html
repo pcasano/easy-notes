@@ -55,6 +55,15 @@
             Restore
           </button>
         }
+        @if (tab() === Tab.Notes && settings.activeArchive) {
+          <button
+            type="button"
+            class="btn btn-primary me-2"
+            (click)="onArchive()"
+          >
+            Archive note
+          </button>
+        }
         <button
           type="button"
           class="btn btn-danger"

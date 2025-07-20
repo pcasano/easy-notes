@@ -8,6 +8,7 @@ type SettingsState = {
     showEditDate: boolean;
     showMovedToTrashDate: boolean;
     activeArchive: boolean;
+    allowArchivedNotesEdit: boolean;
   };
 };
 
@@ -19,6 +20,7 @@ const initialSettingsState: SettingsState = {
     showEditDate: true,
     showMovedToTrashDate: false,
     activeArchive: true,
+    allowArchivedNotesEdit: false,
   },
 };
 

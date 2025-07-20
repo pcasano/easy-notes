@@ -19,6 +19,7 @@ export type Note = {
   createdAt: Date;
   editedAt?: Date;
   movedToTrashAt?: Date;
+  archivedAt?: Date;
   tab: Tab;
 };
 
@@ -46,6 +47,8 @@ export class NoteComponent implements OnInit {
   deletedNote = output<Note>();
 
   restoreNote = output<Note>();
+
+  archivedNote = output<Note>();
 
   noteForm = new FormGroup({
     title: new FormControl(''),
@@ -113,5 +116,11 @@ export class NoteComponent implements OnInit {
     const note = this.selectedNote();
     if (!note) return;
     this.restoreNote.emit(note);
+  }
+
+  onArchive() {
+    const note = this.selectedNote();
+    if (!note) return;
+    this.archivedNote.emit(note);
   }
 }

@@ -106,6 +106,23 @@ export const NoteStore = signalStore(
       });
     },
 
+    onNoteMovedToArchive(noteToMoveToArchive: Note) {
+      patchState(store, (state) => {
+        const updatedNotes = state.notes.map((note) =>
+          note.id === noteToMoveToArchive.id
+            ? { ...note, tab: Tab.Archive, archivedAt: new Date() }
+            : note
+        );
+
+        const filteredNotes = updatedNotes.filter((n) => n.tab === Tab.Archive);
+
+        return {
+          notes: updatedNotes,
+          selectedNote: filteredNotes.length > 0 ? filteredNotes[0] : undefined,
+        };
+      });
+    },
+
     onNoteDeleted(noteToDelete: Note) {
       patchState(store, (state) => {
         const updatedNotes = state.notes.filter(

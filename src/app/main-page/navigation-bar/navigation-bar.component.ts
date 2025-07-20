@@ -1,9 +1,11 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { SettingsStore } from '../../settings-page/services/settings.store';
 
 export enum Tab {
   Notes = 'Notes',
   Trash = 'Trash',
+  Archive = 'Archive',
 }
 
 @Component({
@@ -22,6 +24,19 @@ export enum Tab {
             Notes
           </a>
         </li>
+        @if (settings.activeArchive) {
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active]="currentTab() === Tab.Archive"
+              (click)="setTab(Tab.Archive)"
+              role="button"
+            >
+              Archive
+            </a>
+          </li>
+        }
+
         <li class="nav-item">
           <a
             class="nav-link"
@@ -42,6 +57,10 @@ export enum Tab {
   styleUrl: './navigation-bar.component.scss',
 })
 export class NavigationBarComponent {
+  private settingsStore = inject(SettingsStore);
+
+  settings = this.settingsStore.settings();
+
   readonly Tab = Tab;
 
   selectedTab = output<Tab>();

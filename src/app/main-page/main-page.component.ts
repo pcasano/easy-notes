@@ -66,4 +66,8 @@ export class MainPageComponent {
   onNoteDeleted(noteToDelete: Note) {
     this.noteStore.onNoteDeleted(noteToDelete);
   }
+
+  onNoteArchived(archivedNote: Note) {
+    this.noteStore.onNoteMovedToArchive(archivedNote);
+  }
 }
