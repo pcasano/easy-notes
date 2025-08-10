@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { NotesPanelComponent } from './notes-panel/notes-panel.component';
 import { Note, NoteComponent } from './note/note.component';
 import {
@@ -13,7 +13,11 @@ import { NoteStore } from './services/note.store';
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
+  ngOnInit(): void {
+    this.noteStore.onTabSelected(Tab.Notes);
+  }
+
   private noteStore = inject(NoteStore);
 
   notes = this.noteStore.notes;
