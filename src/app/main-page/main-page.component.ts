@@ -41,7 +41,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onNoteMovedToTrash(noteToMoveToTrash: Note) {
-    this.noteStore.onNoteMovedToTrash(noteToMoveToTrash);
+    this.noteStore.onNoteMovedToTrash(noteToMoveToTrash, this.selectedTab());
   }
 
   filteredNotes = computed(() => {
@@ -64,7 +64,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onNoteRestored(restoredNote: Note) {
-    this.noteStore.onNoteRestored(restoredNote);
+    this.noteStore.onNoteRestored(restoredNote, this.selectedTab());
   }
 
   onNoteDeleted(noteToDelete: Note) {

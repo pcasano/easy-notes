@@ -90,7 +90,7 @@ export const NoteStore = signalStore(
       });
     },
 
-    onNoteMovedToTrash(noteToMoveToTrash: Note) {
+    onNoteMovedToTrash(noteToMoveToTrash: Note, tab: Tab) {
       patchState(store, (state) => {
         const updatedNotes = state.notes.map((note) =>
           note.id === noteToMoveToTrash.id
@@ -98,7 +98,7 @@ export const NoteStore = signalStore(
             : note
         );
 
-        const filteredNotes = updatedNotes.filter((n) => n.tab === Tab.Notes);
+        const filteredNotes = updatedNotes.filter((n) => n.tab === tab);
 
         return {
           notes: updatedNotes,
@@ -115,7 +115,7 @@ export const NoteStore = signalStore(
             : note
         );
 
-        const filteredNotes = updatedNotes.filter((n) => n.tab === Tab.Archive);
+        const filteredNotes = updatedNotes.filter((n) => n.tab === Tab.Notes);
 
         return {
           notes: updatedNotes,
@@ -137,19 +137,17 @@ export const NoteStore = signalStore(
       });
     },
 
-    onNoteRestored(restoredNote: Note) {
+    onNoteRestored(restoredNote: Note, tab: Tab) {
       patchState(store, (state) => {
         const updatedNotes = state.notes.map((note) =>
           note.id === restoredNote.id
             ? { ...note, tab: Tab.Notes, movedToTrashAt: undefined }
             : note
         );
-
-        const filteredNotes = updatedNotes.filter((n) => n.tab === Tab.Trash);
-
+        const firstNote = updatedNotes.find((note) => note.tab === tab);
         return {
           notes: updatedNotes,
-          selectedNote: filteredNotes[0],
+          selectedNote: firstNote ?? undefined,
         };
       });
     },
