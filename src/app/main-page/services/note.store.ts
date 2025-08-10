@@ -153,12 +153,15 @@ export const NoteStore = signalStore(
     },
 
     onTabSelected(tab: Tab) {
-      patchState(store, (state) => {
-        const firstNote = state.notes.find((note) => note.tab === tab);
-        return {
-          selectedTab: tab,
-          selectedNote: firstNote ?? undefined,
-        };
+      patchState(store, () => ({ selectedNote: undefined }));
+      setTimeout(() => {
+        patchState(store, (state) => {
+          const firstNote = state.notes.find((note) => note.tab === tab);
+          return {
+            selectedTab: tab,
+            selectedNote: firstNote ?? undefined,
+          };
+        });
       });
     },
   }))
