@@ -1,4 +1,3 @@
-<app-navigation-bar (selectedTab)="onTabSelected($event)"></app-navigation-bar>
 <div class="row">
   <div class="col-3">
     <app-notes-panel
@@ -11,6 +10,10 @@
     ></app-notes-panel>
   </div>
   <div class="col-9">
+    <app-navigation-bar
+      (selectedTab)="onTabSelected($event)"
+    ></app-navigation-bar>
+
     @if (selectedNote()) {
       <app-note
         [selectedNote]="selectedNote()"

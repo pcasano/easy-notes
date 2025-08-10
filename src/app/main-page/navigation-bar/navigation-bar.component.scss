@@ -1,0 +1,25 @@
+.nav-tabs .nav-link {
+  cursor: pointer;
+  border: none; // remove default tab borders
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &.active {
+    font-weight: 600;
+    color: #0d6efd;
+    border-bottom-color: #0d6efd;
+  }
+
+  &:hover {
+    border-bottom-color: #0d6efd;
+    color: #0d6efd;
+  }
+}
+
+.btn-link {
+  text-decoration: none;
+
+  &:hover {
+    color: #0d6efd;
+  }
+}

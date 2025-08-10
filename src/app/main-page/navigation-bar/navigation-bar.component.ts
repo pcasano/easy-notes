@@ -12,8 +12,11 @@ export enum Tab {
   selector: 'app-navigation-bar',
   imports: [RouterLink],
   template: `
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <ul class="nav nav-tabs">
+    <div
+      class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3"
+    >
+      <!-- Tabs -->
+      <ul class="nav nav-tabs border-0">
         <li class="nav-item">
           <a
             class="nav-link"
@@ -24,6 +27,7 @@ export enum Tab {
             Notes
           </a>
         </li>
+
         @if (settings.activeArchive) {
           <li class="nav-item">
             <a
@@ -49,8 +53,13 @@ export enum Tab {
         </li>
       </ul>
 
-      <button routerLink="settings" class="btn btn-outline-secondary ms-3">
-        <i class="bi bi-gear"></i>
+      <!-- Settings -->
+      <button
+        routerLink="settings"
+        class="btn btn-link text-muted p-0 ms-3"
+        title="Settings"
+      >
+        <i class="bi bi-gear fs-5"></i>
       </button>
     </div>
   `,
