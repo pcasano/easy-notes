@@ -64,13 +64,13 @@ export class NoteComponent implements OnInit {
       .pipe(skip(1), debounceTime(2000), takeUntil(this.destroy$))
       .subscribe((value) => {
         const note = this.selectedNote();
-        if (!note || this.tab() !== Tab.Notes) return;
+        if (!note || this.tab() === Tab.Trash) return;
 
         this.updatedNote.emit({
           id: note.id,
           createdAt: note.createdAt,
           editedAt: this.isDraft ? undefined : new Date(),
-          tab: Tab.Notes,
+          tab: this.tab(),
           ...value,
         } as Note);
       });
@@ -93,7 +93,10 @@ export class NoteComponent implements OnInit {
   });
 
   readonly selectedTabEffect = effect(() => {
-    if (this.tab() == Tab.Notes) {
+    if (
+      this.tab() === Tab.Notes ||
+      (this.tab() === Tab.Archive && this.settings.allowArchivedNotesEdit)
+    ) {
       this.noteForm.enable();
     } else {
       this.noteForm.disable();
