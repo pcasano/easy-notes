@@ -7,7 +7,7 @@ import {
   output,
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { debounceTime, skip, Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Tab } from '../navigation-bar/navigation-bar.component';
 import { SettingsStore } from '../../settings-page/services/settings.store';
@@ -61,7 +61,7 @@ export class NoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.noteForm.valueChanges
-      .pipe(debounceTime(2000), takeUntil(this.destroy$))
+      .pipe(skip(1), debounceTime(2000), takeUntil(this.destroy$))
       .subscribe((value) => {
         const note = this.selectedNote();
         if (!note || this.tab() !== Tab.Notes) return;

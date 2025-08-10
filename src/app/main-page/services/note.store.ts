@@ -84,9 +84,10 @@ export const NoteStore = signalStore(
     },
 
     onNoteSelected(note: Note) {
-      patchState(store, () => ({
-        selectedNote: note,
-      }));
+      patchState(store, () => ({ selectedNote: undefined }));
+      setTimeout(() => {
+        patchState(store, () => ({ selectedNote: note }));
+      });
     },
 
     onNoteMovedToTrash(noteToMoveToTrash: Note) {
@@ -154,10 +155,13 @@ export const NoteStore = signalStore(
     },
 
     onTabSelected(tab: Tab) {
-      patchState(store, (state) => ({
-        selectedTab: tab,
-        selectedNote: state.notes.find((note) => note.tab === tab),
-      }));
+      patchState(store, (state) => {
+        const firstNote = state.notes.find((note) => note.tab === tab);
+        return {
+          selectedTab: tab,
+          selectedNote: firstNote ?? undefined,
+        };
+      });
     },
   }))
 );

@@ -11,14 +11,16 @@
     ></app-notes-panel>
   </div>
   <div class="col-9">
-    <app-note
-      [selectedNote]="selectedNote()"
-      (updatedNote)="onNoteUpdated($event)"
-      (movedToTrashNote)="onNoteMovedToTrash($event)"
-      (restoreNote)="onNoteRestored($event)"
-      (deletedNote)="onNoteDeleted($event)"
-      (archivedNote)="onNoteArchived($event)"
-      [tab]="selectedTab()"
-    ></app-note>
+    @if (selectedNote()) {
+      <app-note
+        [selectedNote]="selectedNote()"
+        (updatedNote)="onNoteUpdated($event)"
+        (movedToTrashNote)="onNoteMovedToTrash($event)"
+        (restoreNote)="onNoteRestored($event)"
+        (deletedNote)="onNoteDeleted($event)"
+        (archivedNote)="onNoteArchived($event)"
+        [tab]="selectedTab()"
+      ></app-note>
+    }
   </div>
 </div>
