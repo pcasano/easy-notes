@@ -1,6 +1,10 @@
 @if (tab() === Tab.Notes) {
-  <button type="button" class="btn btn-primary" (click)="addNote.emit()">
-    New
+  <button
+    type="button"
+    class="btn btn-primary w-100 mb-3"
+    (click)="addNote.emit()"
+  >
+    <i class="bi bi-plus-lg"></i> New Note
   </button>
 }
 
@@ -9,6 +13,7 @@
     type="text"
     id="filter"
     placeholder="Filter"
+    class="form-control"
     (input)="onInput($event)"
   />
 </div>

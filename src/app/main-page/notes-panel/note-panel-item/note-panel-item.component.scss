@@ -1,16 +1,18 @@
-.note-item {
-  padding-right: 40px; /* space for the trash button */
+.list-group-item {
   cursor: pointer;
+
+  &:hover {
+    background-color: #f8f9fa;
+
+    .delete-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
 }
 
-.trash-btn {
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  display: none;
-  z-index: 10;
-}
-
-.note-item:hover .trash-btn {
-  display: inline-block;
+.delete-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
