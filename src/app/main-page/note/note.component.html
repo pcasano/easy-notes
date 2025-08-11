@@ -1,7 +1,7 @@
 @if (selectedNote()) {
   <form [formGroup]="noteForm">
+    <h3>{{ noteForm.get('title')?.value }}</h3>
     <div class="mb-3">
-      <label for="title" class="form-label">Title</label>
       <input
         type="text"
         id="title"
