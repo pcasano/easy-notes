@@ -21,6 +21,7 @@ export class SettingsPageComponent implements OnInit {
   showMovedToTrashDate = true;
   activeArchive = true;
   allowArchivedNotesEdit = true;
+  showSortingButtons = true;
 
   ngOnInit() {
     const settings = this.settingsStore.settings;
@@ -32,6 +33,7 @@ export class SettingsPageComponent implements OnInit {
     this.showMovedToTrashDate = settings.showMovedToTrashDate();
     this.activeArchive = settings.activeArchive();
     this.allowArchivedNotesEdit = settings.allowArchivedNotesEdit();
+    this.showSortingButtons = settings.showSortingButtons();
   }
 
   onBack() {
@@ -43,6 +45,7 @@ export class SettingsPageComponent implements OnInit {
       showMovedToTrashDate: this.showMovedToTrashDate,
       activeArchive: this.activeArchive,
       allowArchivedNotesEdit: this.allowArchivedNotesEdit,
+      showSortingButtons: this.showSortingButtons,
     };
 
     this.settingsStore.saveSettings(settings);

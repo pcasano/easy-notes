@@ -15,7 +15,6 @@ export enum Tab {
     <div
       class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3"
     >
-      <!-- Tabs -->
       <ul class="nav nav-tabs border-0">
         <li class="nav-item">
           <a
@@ -53,7 +52,6 @@ export enum Tab {
         </li>
       </ul>
 
-      <!-- Settings -->
       <button
         routerLink="settings"
         class="btn btn-link text-muted p-0 ms-3"

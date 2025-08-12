@@ -9,6 +9,7 @@ type SettingsState = {
     showMovedToTrashDate: boolean;
     activeArchive: boolean;
     allowArchivedNotesEdit: boolean;
+    showSortingButtons: boolean;
   };
 };
 
@@ -21,6 +22,7 @@ const initialSettingsState: SettingsState = {
     showMovedToTrashDate: false,
     activeArchive: true,
     allowArchivedNotesEdit: false,
+    showSortingButtons: true,
   },
 };
 
