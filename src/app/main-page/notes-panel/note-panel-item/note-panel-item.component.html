@@ -2,7 +2,17 @@
   class="list-group-item list-group-item-action p-3 position-relative"
   (click)="selected.emit(note())"
 >
-  <h6 class="fw-bold mb-1">{{ note().title }}</h6>
+  <div class="d-flex align-items-center">
+    @if (note().pinnedAt) {
+      <i
+        class="bi bi-pin-fill text-primary me-2"
+        style="font-size: 0.9rem"
+        title="Pinned"
+      ></i>
+    }
+
+    <h6 class="fw-bold mb-1 mb-0">{{ note().title }}</h6>
+  </div>
   <small class="text-muted d-block">{{ note().content | truncate }}</small>
   @if (tab() === Tab.Notes) {
     <button

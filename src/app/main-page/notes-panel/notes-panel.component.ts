@@ -29,19 +29,26 @@ export class NotesPanelComponent {
     const filteredNotes = this.notes().filter(
       (note) => note.tab === this.tab()
     );
+    const pinnedNotes = filteredNotes
+      .filter((n) => n.pinnedAt)
+      .sort(
+        (a, b) =>
+          new Date(b.pinnedAt!).getTime() - new Date(a.pinnedAt!).getTime()
+      );
+
+    const unpinnedNotes = filteredNotes.filter((n) => !n.pinnedAt);
 
     if (this.sortAlphabetically()) {
-      return filteredNotes.sort((a, b) =>
+      unpinnedNotes.sort((a, b) =>
         (a.title || '').localeCompare(b.title || '')
       );
     } else if (this.sortByDate()) {
-      return filteredNotes.sort(
+      unpinnedNotes.sort(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
-    } else {
-      return filteredNotes;
     }
+    return [...pinnedNotes, ...unpinnedNotes];
   });
 
   readonly tab = input.required<Tab>();

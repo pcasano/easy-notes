@@ -20,6 +20,7 @@ export type Note = {
   editedAt?: Date;
   movedToTrashAt?: Date;
   archivedAt?: Date;
+  pinnedAt?: Date;
   tab: Tab;
 };
 
@@ -50,9 +51,12 @@ export class NoteComponent implements OnInit {
 
   archivedNote = output<Note>();
 
+  pinnedNote = output<Note>();
+
   noteForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl(''),
+    pinned: new FormControl(),
   });
 
   isDraft = false;
@@ -62,7 +66,7 @@ export class NoteComponent implements OnInit {
   ngOnInit(): void {
     this.noteForm.valueChanges
       .pipe(skip(1), debounceTime(2000), takeUntil(this.destroy$))
-      .subscribe((value) => {
+      .subscribe(({ pinned, ...value }) => {
         const note = this.selectedNote();
         if (!note || this.tab() === Tab.Trash) return;
 
@@ -71,6 +75,7 @@ export class NoteComponent implements OnInit {
           createdAt: note.createdAt,
           editedAt: this.isDraft ? undefined : new Date(),
           tab: this.tab(),
+          pinnedAt: note.pinnedAt,
           ...value,
         } as Note);
       });
@@ -84,6 +89,7 @@ export class NoteComponent implements OnInit {
         {
           title: note.title,
           content: note.content,
+          pinned: !!note.pinnedAt,
         },
         { emitEvent: false }
       );
@@ -125,5 +131,13 @@ export class NoteComponent implements OnInit {
     const note = this.selectedNote();
     if (!note) return;
     this.archivedNote.emit(note);
+  }
+
+  onPinToggle(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    const note = this.selectedNote();
+    if (!note) return;
+    note.pinnedAt = checked ? new Date() : undefined;
+    this.updatedNote.emit(note);
   }
 }

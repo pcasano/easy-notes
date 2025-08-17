@@ -41,6 +41,7 @@ export class MainPageComponent implements OnInit {
   }
 
   onNoteMovedToTrash(noteToMoveToTrash: Note) {
+    noteToMoveToTrash.pinnedAt = undefined;
     this.noteStore.onNoteMovedToTrash(noteToMoveToTrash, this.selectedTab());
   }
 
@@ -72,6 +73,11 @@ export class MainPageComponent implements OnInit {
   }
 
   onNoteArchived(archivedNote: Note) {
+    archivedNote.pinnedAt = undefined;
     this.noteStore.onNoteMovedToArchive(archivedNote);
+  }
+
+  onNotePinned(pinnedNote: Note) {
+    this.noteStore.onNoteUpdated(pinnedNote);
   }
 }

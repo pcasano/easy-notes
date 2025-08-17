@@ -1,6 +1,22 @@
 @if (selectedNote()) {
   <form [formGroup]="noteForm">
-    <h3>{{ noteForm.get('title')?.value }}</h3>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="mb-0">{{ noteForm.get('title')?.value }}</h3>
+
+      @if (this.tab() === Tab.Notes) {
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="pinned"
+            formControlName="pinned"
+            (change)="onPinToggle($event)"
+          />
+          <label class="form-check-label" for="pinned"> Pin </label>
+        </div>
+      }
+    </div>
+
     <div class="mb-3">
       <input
         type="text"
