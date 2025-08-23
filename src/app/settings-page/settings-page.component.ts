@@ -2,10 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SettingsStore } from './services/settings.store';
+import {
+  BadgeType,
+  TagSettingComponent,
+} from './tag-setting/tag-setting.component';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [FormsModule],
+  imports: [FormsModule, TagSettingComponent],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
 })
@@ -22,6 +26,7 @@ export class SettingsPageComponent implements OnInit {
   activeArchive = true;
   allowArchivedNotesEdit = true;
   showSortingButtons = true;
+  badges: BadgeType[] = [];
 
   ngOnInit() {
     const settings = this.settingsStore.settings;
@@ -34,6 +39,7 @@ export class SettingsPageComponent implements OnInit {
     this.activeArchive = settings.activeArchive();
     this.allowArchivedNotesEdit = settings.allowArchivedNotesEdit();
     this.showSortingButtons = settings.showSortingButtons();
+    this.badges = settings.badges();
   }
 
   onBack() {
@@ -46,10 +52,14 @@ export class SettingsPageComponent implements OnInit {
       activeArchive: this.activeArchive,
       allowArchivedNotesEdit: this.allowArchivedNotesEdit,
       showSortingButtons: this.showSortingButtons,
+      badges: this.badges,
     };
-
     this.settingsStore.saveSettings(settings);
 
     this.router.navigate(['/']);
+  }
+
+  onSavedBadges(savedBadges: BadgeType[]) {
+    this.badges = [...savedBadges];
   }
 }

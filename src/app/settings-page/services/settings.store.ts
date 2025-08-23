@@ -1,4 +1,5 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { BadgeType } from '../tag-setting/tag-setting.component';
 
 type SettingsState = {
   settings: {
@@ -10,6 +11,7 @@ type SettingsState = {
     activeArchive: boolean;
     allowArchivedNotesEdit: boolean;
     showSortingButtons: boolean;
+    badges: BadgeType[];
   };
 };
 
@@ -23,6 +25,7 @@ const initialSettingsState: SettingsState = {
     activeArchive: true,
     allowArchivedNotesEdit: false,
     showSortingButtons: true,
+    badges: [],
   },
 };
 

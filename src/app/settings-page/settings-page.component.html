@@ -107,6 +107,11 @@
       </div>
     </div>
 
+    <h5>Tags</h5>
+    <div class="p-3">
+      <app-tag-setting (savedBadges)="onSavedBadges($event)"> </app-tag-setting>
+    </div>
+
     <div class="p-3">
       <button class="btn btn-outline-primary" (click)="onBack()">Back</button>
     </div>

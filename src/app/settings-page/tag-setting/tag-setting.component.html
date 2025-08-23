@@ -1,0 +1,40 @@
+<div class="d-flex align-items-center gap-3 mb-3">
+  <input
+    type="text"
+    class="form-control w-auto"
+    placeholder="Badge text"
+    [(ngModel)]="badgeText"
+  />
+
+  <select class="form-select w-auto" [(ngModel)]="selectedClass">
+    @for (c of colors; track c) {
+      <option [value]="c.class">
+        {{ c.name }}
+      </option>
+    }
+  </select>
+
+  <span class="badge {{ selectedClass }}">
+    {{ badgeText || 'Example' }}
+  </span>
+</div>
+
+<button class="btn btn-primary btn-sm mb-3" (click)="addBadge()">Add</button>
+
+<div class="d-flex flex-wrap gap-2">
+  @if (badges.length > 0) {
+    @for (b of badges; track b; let i = $index) {
+      <span class="badge {{ b.class }} d-flex align-items-center gap-1">
+        {{ b.name }}
+        <button
+          type="button"
+          class="btn-close btn-close-white btn-sm ms-1"
+          aria-label="Remove"
+          (click)="removeBadge(i)"
+        ></button>
+      </span>
+    }
+  } @else {
+    <div class="text-danger">⚠ No tags defined yet.</div>
+  }
+</div>
