@@ -28,9 +28,10 @@ export class MainPageComponent implements OnInit {
 
   filterText = signal('');
 
+  filterTag = signal('');
+
   onNoteChosen(note: Note) {
     this.noteStore.onNoteSelected(note);
-    console.log('from selected', note);
   }
 
   onNoteUpdated(updatedNote: Note) {
@@ -47,18 +48,28 @@ export class MainPageComponent implements OnInit {
   }
 
   filteredNotes = computed(() => {
-    const query = this.filterText().trim().toLowerCase();
-    return !query
-      ? this.notes()
-      : this.notes().filter(
-          (note) =>
-            note.title?.toLowerCase().includes(query) ||
-            note.content?.toLowerCase().includes(query)
-        );
+    const textToFilter = this.filterText().trim().toLowerCase();
+    const tagToFilter = this.filterTag().trim().toLowerCase();
+
+    return this.notes().filter((note) => {
+      const matchesText =
+        !textToFilter ||
+        note.title?.toLowerCase().includes(textToFilter) ||
+        note.content?.toLowerCase().includes(textToFilter);
+
+      const matchesTag =
+        !tagToFilter || note.tag?.name.toLowerCase().includes(tagToFilter);
+
+      return matchesText && matchesTag;
+    });
   });
 
   onNoteFiltered(value: string) {
     this.filterText.set(value);
+  }
+
+  onNoteFilteredByTag(value: string) {
+    this.filterTag.set(value);
   }
 
   onTabSelected(tab: Tab) {

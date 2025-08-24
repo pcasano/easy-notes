@@ -1,37 +1,48 @@
 @if (tab() === Tab.Notes) {
-  <button
-    type="button"
-    class="btn btn-primary w-100 mb-3"
-    (click)="addNote.emit()"
-  >
-    <i class="bi bi-plus-lg"></i> New Note
-  </button>
+  <div class="d-flex align-items-center gap-2 pb-2">
+    <button
+      type="button"
+      class="btn btn-primary flex-grow-1"
+      (click)="addNote.emit()"
+    >
+      <i class="bi bi-plus-lg"></i> New Note
+    </button>
+
+    @if (settings.showSortingButtons) {
+      <button
+        class="btn btn-outline-secondary"
+        title="Sort A → Z"
+        (click)="sortAlphabeticallyClicked()"
+      >
+        <i class="bi bi-sort-alpha-down"></i>
+      </button>
+      <button
+        class="btn btn-outline-secondary"
+        title="Sort by newest first"
+        (click)="sortByDateClicked()"
+      >
+        <i class="bi bi-calendar-date"></i>
+      </button>
+    }
+  </div>
 }
 
-<div class="d-flex align-items-center gap-2">
+<div class="d-flex align-items-center gap-2 w-100">
   <input
     type="text"
     id="filter"
     placeholder="Filter"
     class="form-control"
-    (input)="onInput($event)"
+    (input)="onFilterNote($event)"
   />
-  @if (settings.showSortingButtons) {
-    <button
-      class="btn btn-outline-secondary btn-sm"
-      title="Sort A → Z"
-      (click)="sortAlphabeticallyClicked()"
-    >
-      <i class="bi bi-sort-alpha-down"></i>
-    </button>
-    <button
-      class="btn btn-outline-secondary btn-sm"
-      title="Sort by newest first"
-      (click)="sortByDateClicked()"
-    >
-      <i class="bi bi-calendar-date"></i>
-    </button>
-  }
+
+  <input
+    type="text"
+    id="filterTag"
+    placeholder="Tag"
+    class="form-control"
+    (input)="onFilterTag($event)"
+  />
 </div>
 @for (note of notesFilteredByTab(); track note.id) {
   <app-note-panel-item

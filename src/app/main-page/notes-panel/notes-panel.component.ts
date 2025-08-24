@@ -53,6 +53,8 @@ export class NotesPanelComponent {
 
   readonly tab = input.required<Tab>();
 
+  protected readonly Tab = Tab;
+
   sortAlphabetically = signal(false);
 
   sortByDate = signal(true);
@@ -65,12 +67,17 @@ export class NotesPanelComponent {
 
   filterNote = output<string>();
 
-  onInput(event: Event) {
+  filterTag = output<string>();
+
+  onFilterNote(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     this.filterNote.emit(inputElement.value);
   }
 
-  protected readonly Tab = Tab;
+  onFilterTag(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.filterTag.emit(inputElement.value);
+  }
 
   sortAlphabeticallyClicked() {
     this.sortAlphabetically.set(true);

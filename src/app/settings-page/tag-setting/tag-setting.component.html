@@ -15,7 +15,9 @@
   </select>
 
   <span class="badge {{ selectedClass }}">
-    {{ badgeText || 'Example' }}
+    @if (badgeText.length > 0) {
+      {{ badgeText }}
+    }
   </span>
 </div>
 
