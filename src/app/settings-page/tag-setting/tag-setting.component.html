@@ -1,4 +1,4 @@
-<div class="d-flex align-items-center gap-3 mb-3">
+<div class="d-flex align-items-center gap-3 mb-4">
   <input
     type="text"
     class="form-control w-auto"
@@ -14,14 +14,14 @@
     }
   </select>
 
+  <button class="btn btn-primary btn-sm" (click)="addBadge()">Add</button>
+
   <span class="badge {{ selectedClass }}">
     @if (badgeText.length > 0) {
       {{ badgeText }}
     }
   </span>
 </div>
-
-<button class="btn btn-primary btn-sm mb-3" (click)="addBadge()">Add</button>
 
 <div class="d-flex flex-wrap gap-2">
   @if (badges.length > 0) {
