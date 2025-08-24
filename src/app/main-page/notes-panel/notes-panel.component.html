@@ -27,22 +27,25 @@
   </div>
 }
 
-<div class="d-flex align-items-center gap-2 w-100">
-  <input
-    type="text"
-    id="filter"
-    placeholder="Filter"
-    class="form-control"
-    (input)="onFilterNote($event)"
-  />
-
-  <input
-    type="text"
-    id="filterTag"
-    placeholder="Tag"
-    class="form-control"
-    (input)="onFilterTag($event)"
-  />
+<div class="row g-2 w-100">
+  <div class="col-7">
+    <input
+      type="text"
+      id="filter"
+      placeholder="Filter"
+      class="form-control"
+      (input)="onFilterNote($event)"
+    />
+  </div>
+  <div class="col-5">
+    <input
+      type="text"
+      id="filterTag"
+      placeholder="Tag"
+      class="form-control"
+      (input)="onFilterTag($event)"
+    />
+  </div>
 </div>
 @for (note of notesFilteredByTab(); track note.id) {
   <app-note-panel-item
