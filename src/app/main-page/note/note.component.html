@@ -17,6 +17,7 @@
               formControlName="tag"
               (change)="onTagChange($event)"
             >
+              <option value=""></option>
               @for (tag of tags; track tag) {
                 <option [value]="tag.name">{{ tag.name }}</option>
               }

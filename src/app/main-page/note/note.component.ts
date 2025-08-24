@@ -157,6 +157,10 @@ export class NoteComponent implements OnInit {
     const value = (event.target as HTMLSelectElement).value;
     const note = this.selectedNote();
     if (!note) return;
+    if (value.length === 0) {
+      note.tag = undefined;
+      this.updatedNote.emit(note);
+    }
     const badge = this.tags.find((t) => t.name === value);
     if (badge) {
       note.tag = badge;
