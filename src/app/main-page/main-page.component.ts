@@ -30,6 +30,7 @@ export class MainPageComponent implements OnInit {
 
   onNoteChosen(note: Note) {
     this.noteStore.onNoteSelected(note);
+    console.log('from selected', note);
   }
 
   onNoteUpdated(updatedNote: Note) {

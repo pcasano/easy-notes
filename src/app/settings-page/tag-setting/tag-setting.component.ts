@@ -1,5 +1,6 @@
-import { Component, output } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SettingsStore } from '../services/settings.store';
 
 export type BadgeType = {
   name: string;
@@ -13,6 +14,8 @@ export type BadgeType = {
   styleUrl: './tag-setting.component.scss',
 })
 export class TagSettingComponent {
+  private settingsStore = inject(SettingsStore);
+
   colors: BadgeType[] = [
     { name: 'Blue', class: 'bg-primary' },
     { name: 'Gray', class: 'bg-secondary' },
@@ -26,7 +29,7 @@ export class TagSettingComponent {
   selectedClass = this.colors[0].class;
   badgeText = '';
 
-  badges: BadgeType[] = [];
+  badges: BadgeType[] = this.settingsStore.settings.badges();
 
   savedBadges = output<BadgeType[]>();
 

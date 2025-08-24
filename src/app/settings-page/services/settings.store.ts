@@ -25,7 +25,20 @@ const initialSettingsState: SettingsState = {
     activeArchive: true,
     allowArchivedNotesEdit: false,
     showSortingButtons: true,
-    badges: [],
+    badges: [
+      {
+        name: 'Sport',
+        class: 'bg-success',
+      },
+      {
+        name: 'Work',
+        class: 'bg-danger',
+      },
+      {
+        name: 'Travel',
+        class: 'bg-dark',
+      },
+    ],
   },
 };
 

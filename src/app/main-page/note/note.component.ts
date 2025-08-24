@@ -6,11 +6,17 @@ import {
   OnInit,
   output,
 } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { debounceTime, skip, Subject, takeUntil } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Tab } from '../navigation-bar/navigation-bar.component';
 import { SettingsStore } from '../../settings-page/services/settings.store';
+import { BadgeType } from '../../settings-page/tag-setting/tag-setting.component';
 
 export type Note = {
   id: string;
@@ -22,11 +28,12 @@ export type Note = {
   archivedAt?: Date;
   pinnedAt?: Date;
   tab: Tab;
+  tag?: BadgeType;
 };
 
 @Component({
   selector: 'app-note',
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, DatePipe, FormsModule],
   templateUrl: './note.component.html',
   styleUrl: './note.component.scss',
 })
@@ -53,10 +60,13 @@ export class NoteComponent implements OnInit {
 
   pinnedNote = output<Note>();
 
+  tags: BadgeType[] = this.settingsStore.settings.badges();
+
   noteForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl(''),
     pinned: new FormControl(),
+    tag: new FormControl(),
   });
 
   isDraft = false;
@@ -66,7 +76,7 @@ export class NoteComponent implements OnInit {
   ngOnInit(): void {
     this.noteForm.valueChanges
       .pipe(skip(1), debounceTime(2000), takeUntil(this.destroy$))
-      .subscribe(({ pinned, ...value }) => {
+      .subscribe(({ pinned, tag, ...value }) => {
         const note = this.selectedNote();
         if (!note || this.tab() === Tab.Trash) return;
 
@@ -76,6 +86,7 @@ export class NoteComponent implements OnInit {
           editedAt: this.isDraft ? undefined : new Date(),
           tab: this.tab(),
           pinnedAt: note.pinnedAt,
+          tag: note.tag,
           ...value,
         } as Note);
       });
@@ -90,6 +101,7 @@ export class NoteComponent implements OnInit {
           title: note.title,
           content: note.content,
           pinned: !!note.pinnedAt,
+          tag: note.tag?.name,
         },
         { emitEvent: false }
       );
@@ -139,5 +151,16 @@ export class NoteComponent implements OnInit {
     if (!note) return;
     note.pinnedAt = checked ? new Date() : undefined;
     this.updatedNote.emit(note);
+  }
+
+  onTagChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    const note = this.selectedNote();
+    if (!note) return;
+    const badge = this.tags.find((t) => t.name === value);
+    if (badge) {
+      note.tag = badge;
+      this.updatedNote.emit(note);
+    }
   }
 }
