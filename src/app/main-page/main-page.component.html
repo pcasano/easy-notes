@@ -1,15 +1,18 @@
 <div class="row">
   <div class="col-3" style="margin-top: 66px">
-    <app-notes-panel
-      [notes]="filteredNotes()"
-      (noteSelected)="onNoteChosen($event)"
-      (noteDeleted)="onNoteMovedToTrash($event)"
-      (addNote)="onNewNote()"
-      (filterNote)="onNoteFiltered($event)"
-      (filterTag)="onNoteFilteredByTag($event)"
-      [tab]="selectedTab()"
-    ></app-notes-panel>
+    @if (notesInCurrentTab.length > 0 || selectedTab() === Tab.Notes) {
+      <app-notes-panel
+        [notes]="filteredNotes()"
+        (noteSelected)="onNoteChosen($event)"
+        (noteDeleted)="onNoteMovedToTrash($event)"
+        (addNote)="onNewNote()"
+        (filterNote)="onNoteFiltered($event)"
+        (filterTag)="onNoteFilteredByTag($event)"
+        [tab]="selectedTab()"
+      ></app-notes-panel>
+    }
   </div>
+
   <div class="col-9">
     <app-navigation-bar
       (selectedTab)="onTabSelected($event)"
@@ -26,6 +29,10 @@
         (pinnedNote)="onNotePinned($event)"
         [tab]="selectedTab()"
       ></app-note>
+    } @else {
+      <app-empty-state
+        [description]="selectedTab() + ' is empty'"
+      ></app-empty-state>
     }
   </div>
 </div>
